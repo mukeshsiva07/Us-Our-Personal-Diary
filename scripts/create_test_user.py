@@ -30,20 +30,34 @@ def main():
     Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
-    try:
-        existing = db.query(User).filter(User.username == username).first()
-        if existing:
-            print(f"User '{username}' already exists. No changes made.")
-            sys.exit(0)
 
-        user = User(username=username, password_hash=hash_password(password))
-        db.add(user)
-        db.commit()
-        print(f"Test user '{username}' created successfully.")
+    try:
+        # Find the existing test user.
+        existing = db.query(User).filter(User.username == "testuser").first()
+
+        if existing:
+            # Change the existing user's username and password.
+            existing.username = username
+            existing.password_hash = hash_password(password)
+
+            db.commit()
+
+            print(f"User updated successfully to '{username}'.")
+        else:
+            # Create the user if testuser does not exist.
+            user = User(
+                username=username,
+                password_hash=hash_password(password)
+            )
+
+            db.add(user)
+            db.commit()
+
+            print(f"User '{username}' created successfully.")
+
     finally:
         db.close()
 
 
 if __name__ == "__main__":
     main()
-
