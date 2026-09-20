@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 const API_BASE = import.meta.env.VITE_API_BASE_URL as string;
 const AUTH_KEY = 'copiko_milo_auth_session_v1';
 
