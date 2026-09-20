@@ -27,26 +27,46 @@ export default {
           500: '#7B736D',
           400: '#A49C94',
         },
+        // Mukesh's Journey: Shades of green (mainly cyan, turquoise & teal)
         mukesh: {
-          DEFAULT: '#2B5B84',
-          light: '#4B7B9E',
-          dark: '#1C3E5A',
-          subtle: '#EDF4F9',
-          border: '#BED4E3',
+          DEFAULT: '#0D9488', // Teal-600
+          light: '#14B8A6',   // Teal-500
+          cyan: '#06B6D4',    // Cyan-500
+          turquoise: '#2DD4BF', // Turquoise
+          dark: '#0F766E',    // Teal-700
+          subtle: '#F0FDFA',  // Teal-50
+          border: '#99F6E4',  // Teal-200
         },
+        // Anne's Journey: Shades of Blue, Purple & Pink
         anne: {
-          DEFAULT: '#B86B77',
-          light: '#D48A96',
-          dark: '#85424D',
-          subtle: '#FAF0F2',
-          border: '#E8C5CC',
+          DEFAULT: '#8B5CF6', // Violet-500
+          pink: '#EC4899',    // Pink-500
+          blue: '#6366F1',    // Indigo-500
+          light: '#A855F7',   // Purple-500
+          dark: '#6D28D9',    // Purple-700
+          subtle: '#FAF5FF',  // Purple-50
+          border: '#E9D5FF',  // Purple-200
         },
+        // Copiko & Milo's Soul: Shades of Orange
         soul: {
-          DEFAULT: '#C29236',
-          light: '#DCAB50',
-          dark: '#8E671D',
-          subtle: '#FAF5EA',
-          border: '#E8D4A8',
+          DEFAULT: '#F97316', // Orange-500
+          light: '#FB923C',   // Orange-400
+          amber: '#F59E0B',   // Amber-500
+          dark: '#C2410C',    // Orange-700
+          subtle: '#FFF7ED',  // Orange-50
+          border: '#FED7AA',  // Orange-200
+        },
+      },
+      animation: {
+        'float-slow': 'float 18s ease-in-out infinite',
+        'float-delayed': 'float 22s ease-in-out 4s infinite',
+        'pulse-subtle': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -40px) scale(1.08)' },
+          '66%': { transform: 'translate(-25px, 20px) scale(0.95)' },
         },
       },
     },
@@ -55,4 +75,3 @@ export default {
     require('@tailwindcss/typography'),
   ],
 };
-

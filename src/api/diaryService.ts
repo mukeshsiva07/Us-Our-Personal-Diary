@@ -299,13 +299,32 @@ function saveEntries(entries: Entry[]): void {
 export const diaryService = {
   // Auth
   async login(username: string, password: string): Promise<{ success: boolean; token?: string }> {
-    // Artificial latency for authentic network feel
-    await new Promise((resolve) => setTimeout(resolve, 350));
-    
+    const backendUrl = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
+    try {
+      const res = await fetch(`${backendUrl}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username.trim(), password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const token = `tok_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+        sessionStorage.setItem(AUTH_KEY, JSON.stringify({
+          username: data.username,
+          displayName: 'Mukesh & Anne',
+          token,
+          justLoggedIn: true,
+        }));
+        return { success: true, token };
+      }
+    } catch {
+      // Backend server not reachable, fallback to offline credentials
+    }
+
     const validUser = 'muke_jovi';
     const validPass = 'copiko&milo2507';
 
-    if (username === validUser && password === validPass) {
+    if (username.trim() === validUser && password === validPass) {
       const token = `tok_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       sessionStorage.setItem(AUTH_KEY, JSON.stringify({
         username: validUser,

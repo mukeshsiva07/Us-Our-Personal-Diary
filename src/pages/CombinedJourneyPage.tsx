@@ -4,6 +4,8 @@ import { EntrySummary } from '../types/diary';
 import { diaryService } from '../api/diaryService';
 import { CopikoMiloLogo } from '../components/logos/CopikoMiloLogo';
 import { EntryEditorPanel } from '../components/editor/EntryEditorPanel';
+import { AmbientBackground } from '../components/AmbientBackground';
+import { ProfileMenu } from '../components/ProfileMenu';
 import { ArrowLeft, Plus, Calendar, BookOpen, Heart, Sparkles, Feather } from 'lucide-react';
 
 export const CombinedJourneyPage: React.FC = () => {
@@ -30,38 +32,44 @@ export const CombinedJourneyPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-parchment-100 pb-20 selection:bg-soul-border">
+    <div className="min-h-screen bg-parchment-100 pb-20 selection:bg-soul-border relative overflow-hidden">
+      <AmbientBackground />
+
       {/* Top Header Bar */}
       <header className="sticky top-0 z-30 bg-parchment-100/90 backdrop-blur-md border-b border-parchment-300 px-4 sm:px-8 py-3.5 flex items-center justify-between">
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-parchment-300 hover:bg-parchment-200 text-xs font-medium text-ink-700 transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-parchment-300 hover:bg-parchment-200 text-xs font-semibold text-ink-700 transition-colors shadow-sm"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Home Deck</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setIsEditorOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all shadow-sm active:scale-95 bg-soul hover:bg-soul-dark text-white"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add a shared entry</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsEditorOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm active:scale-95 bg-soul hover:bg-soul-dark text-white"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add a shared entry</span>
+          </button>
+
+          <ProfileMenu onLogout={() => navigate('/login')} />
+        </div>
       </header>
 
       {/* Hero Banner with Section Emblem */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-8 text-center sm:text-left flex flex-col sm:flex-row items-center gap-6 border-b border-parchment-300/60">
-        <div className="p-4 rounded-3xl bg-white border border-parchment-300 shadow-sm">
-          <CopikoMiloLogo size={80} color="#C29236" />
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-8 text-center sm:text-left flex flex-col sm:flex-row items-center gap-6 border-b border-parchment-300/60 relative z-10">
+        <div className="p-4 rounded-3xl bg-white/95 border border-parchment-300 shadow-sm backdrop-blur-sm">
+          <CopikoMiloLogo size={80} color="#F97316" />
         </div>
 
         <div>
           <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border bg-soul-subtle text-soul-dark border-soul-border">
-              <Heart className="w-3 h-3 fill-soul text-soul" />
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border bg-soul-subtle text-soul-dark border-soul-border">
+              <Heart className="w-3 h-3 fill-soul text-soul animate-pulse" />
               <span>Our Shared World · Dual POV</span>
             </span>
             <span className="text-xs text-ink-400 font-sans">
@@ -79,14 +87,14 @@ export const CombinedJourneyPage: React.FC = () => {
       </section>
 
       {/* Main Content Area: Entries Grid or Empty State */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-8 relative z-10">
         {loading ? (
           <div className="py-20 flex justify-center">
             <div className="w-7 h-7 border-2 border-soul border-t-transparent rounded-full animate-spin" />
           </div>
         ) : entries.length === 0 ? (
           /* Inviting Empty State */
-          <div className="py-20 px-6 max-w-md mx-auto text-center bg-white rounded-3xl border border-parchment-300 p-8 shadow-sm">
+          <div className="py-20 px-6 max-w-md mx-auto text-center bg-white/95 backdrop-blur-sm rounded-3xl border border-parchment-300 p-8 shadow-sm">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-soul-subtle border border-soul-border flex items-center justify-center text-soul">
               <Feather className="w-7 h-7 stroke-[1.5]" />
             </div>
@@ -112,7 +120,7 @@ export const CombinedJourneyPage: React.FC = () => {
               <article
                 key={entry.id}
                 onClick={() => navigate(`/entry/${entry.id}`)}
-                className="group cursor-pointer bg-white rounded-3xl border border-parchment-300 overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
+                className="group cursor-pointer bg-white/95 backdrop-blur-sm rounded-3xl border border-parchment-300 overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
                   {/* Cover Thumbnail */}
@@ -188,4 +196,3 @@ export const CombinedJourneyPage: React.FC = () => {
     </div>
   );
 };
-

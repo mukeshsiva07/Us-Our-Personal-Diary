@@ -5,6 +5,8 @@ import { HomePage } from './pages/HomePage';
 import { JourneyPage } from './pages/JourneyPage';
 import { CombinedJourneyPage } from './pages/CombinedJourneyPage';
 import { EntryViewerPage } from './pages/EntryViewerPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { DashboardPage } from './pages/DashboardPage';
 import { diaryService } from './api/diaryService';
 
 // Protected route guard
@@ -27,6 +29,24 @@ export const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
             </ProtectedRoute>
           }
         />
@@ -66,4 +86,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-
